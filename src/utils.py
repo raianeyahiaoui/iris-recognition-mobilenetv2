@@ -1,23 +1,15 @@
 # src/utils.py
 
+
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import os
 
 def get_dataset(data_dir, batch_size, img_height, img_width, validation_split=0.2):
     """
     Loads training and validation datasets from a directory.
-
-    Args:
-        data_dir (str): Path to the dataset directory.
-        batch_size (int): The size of the batches of data.
-        img_height (int): The height to resize images to.
-        img_width (int): The width to resize images to.
-        validation_split (float): Fraction of data to reserve for validation.
-
-    Returns:
-        tuple: A tuple containing the training and validation datasets.
     """
     print(f"Loading data from: {data_dir}")
     train_ds = tf.keras.utils.image_dataset_from_directory(
@@ -41,37 +33,38 @@ def get_dataset(data_dir, batch_size, img_height, img_width, validation_split=0.
 
 def plot_history(history):
     """
-    Visualizes the training and validation history for accuracy and loss.
-
-    Args:
-        history (tf.keras.callbacks.History): The history object returned by model.fit().
+    Visualizes the training and validation history and saves the plots to files.
     """
-    epochs = range(1, len(history.history['accuracy']) + 1)
+    # --- Create a directory to save results ---
+    save_dir = '../docs/images' # We will save them directly to the docs folder
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
 
-    # Create a DataFrame for easy plotting
-    results_df = pd.DataFrame({
-        "epoch": epochs,
-        "accuracy": history.history["accuracy"],
-        "val_accuracy": history.history["val_accuracy"],
-        "loss": history.history["loss"],
-        "val_loss": history.history["val_loss"]
-    }).set_index("epoch")
-
-    # Plotting
+    # --- Plot and Save Accuracy ---
+    plt.figure(figsize=(8, 6))
     sns.set_style("darkgrid")
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+    plt.plot(history.history['accuracy'], label='accuracy')
+    plt.plot(history.history['val_accuracy'], label='val_accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.title('Model Accuracy')
+    plt.legend()
+    accuracy_plot_path = os.path.join(save_dir, 'accuracy_plot.png')
+    plt.savefig(accuracy_plot_path)
+    print(f"Accuracy plot saved to: {accuracy_plot_path}")
+    
+    # --- Plot and Save Loss ---
+    plt.figure(figsize=(8, 6))
+    sns.set_style("darkgrid")
+    plt.plot(history.history['loss'], label='loss')
+    plt.plot(history.history['val_loss'], label='val_loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Model Loss')
+    plt.legend()
+    loss_plot_path = os.path.join(save_dir, 'loss_plot.png')
+    plt.savefig(loss_plot_path)
+    print(f"Loss plot saved to: {loss_plot_path}")
 
-    # Plot Accuracy
-    sns.lineplot(data=results_df[["accuracy", "val_accuracy"]], dashes=False, ax=ax1)
-    ax1.set_title('Model Accuracy')
-    ax1.set_ylabel('Accuracy')
-    ax1.set_xlabel('Epoch')
-
-    # Plot Loss
-    sns.lineplot(data=results_df[["loss", "val_loss"]], dashes=False, ax=ax2)
-    ax2.set_title('Model Loss')
-    ax2.set_ylabel('Loss')
-    ax2.set_xlabel('Epoch')
-
-    plt.suptitle('Model Training History', fontsize=16)
+    # --- Show the plots on screen ---
     plt.show()
