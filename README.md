@@ -33,11 +33,13 @@ An advanced iris recognition system implemented in Python using TensorFlow and K
 
 ---
 
+---
+
 ## 📂 Project Structure
 
 The project is organized in a clear and maintainable structure:
 
-``
+```
 IrisRecog-MobileNetV2/
 ├── .gitignore
 ├── README.md
@@ -50,6 +52,8 @@ IrisRecog-MobileNetV2/
     ├── model.py
     └── utils.py
 ```
+
+---
 
 ## 🗂️ Dataset Requirements
 
@@ -70,6 +74,8 @@ data/
     │   ├── image_99.bmp
     │   └── ...
     └── ...
+```
+
 **Note:** The dataset itself is not included in this repository and must be provided by the user. Place your `Train_Dataset` and `Test_Dataset` folders inside the `data/` directory.
 
 
