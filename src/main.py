@@ -3,43 +3,44 @@
 import os
 import tensorflow as tf
 from model import build_model
-from utils import get_dataset, plot_history
+# ADD save_sample_images to this import
+from utils import get_dataset, plot_history, save_sample_images 
 
 # --- Configuration & Hyperparameters ---
-# Dataset Parameters
+# (Keep all your existing configurations the same)
 TRAIN_DIR = "../data/Train_Dataset"
-TEST_DIR = "../data/Test_Dataset" # This will be used as the validation set in this script
-
-# Image Parameters
-N_CLASSES = 50      # IMPORTANT: Adjust this to the number of classes in your dataset
+TEST_DIR = "../data/Test_Dataset"
+N_CLASSES = 50
 IMG_HEIGHT = 400
 IMG_WIDTH = 300
 CHANNELS = 3
-
-# Training Parameters
 LEARNING_RATE = 0.001
 EPOCHS = 20
 BATCH_SIZE = 64
-
-# Model Parameters
 DROPOUT_RATE = 0.3
 MODEL_SAVE_PATH = 'MobilenetV2'
 
 def main():
     """Main function to run the iris recognition training pipeline."""
-    # Ensure dataset paths exist
-    if not os.path.exists(TRAIN_DIR) or not os.path.exists(TEST_DIR):
-        print("Error: Dataset directories not found.")
-        print("Please place your training and testing data in the 'data/Train_Dataset' and 'data/Test_Dataset' folders.")
+    if not os.path.exists(TRAIN_DIR):
+        print("Error: Training directory not found.")
         return
 
     # 1. Load Datasets
-    # Note: We use the 'TEST_DIR' as the validation data for the .fit() method
-    # An alternative is to use a single directory and a validation_split as in utils.py
-    train_ds, _ = get_dataset(TRAIN_DIR, BATCH_SIZE, IMG_HEIGHT, IMG_WIDTH, validation_split=0.01) # Small split to satisfy function
+    train_ds, _ = get_dataset(TRAIN_DIR, BATCH_SIZE, IMG_HEIGHT, IMG_WIDTH, validation_split=0.01)
     val_ds, _ = get_dataset(TEST_DIR, BATCH_SIZE, IMG_HEIGHT, IMG_WIDTH, validation_split=0.01)
 
+    # --- NEW PART: SAVE THE BANNER IMAGE ---
+    # Get the class names from the dataset
+    class_names = train_ds.class_names
+    # Define the save path for the banner
+    banner_path = '../docs/images/project_banner.png'
+    # Call the function to save the image
+    save_sample_images(train_ds, class_names, banner_path)
+    # --- END OF NEW PART ---
+
     # 2. Build the Model
+    # (The rest of your main function stays exactly the same)
     input_shape = (IMG_HEIGHT, IMG_WIDTH, CHANNELS)
     model = build_model(input_shape, N_CLASSES, DROPOUT_RATE)
 
@@ -67,7 +68,6 @@ def main():
 
     # 6. Visualize Results
     plot_history(history)
-
 
 if __name__ == '__main__':
     main()
