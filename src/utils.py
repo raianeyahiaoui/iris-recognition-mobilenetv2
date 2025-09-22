@@ -35,7 +35,7 @@ def plot_history(history):
     Visualizes the training and validation history and saves the plots to files.
     """
     # --- Create a directory to save results ---
-    save_dir = '../docs/images' # We will save them directly to the docs folder
+    save_dir = 'docs/images' # We will save them directly to the docs folder
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
