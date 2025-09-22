@@ -29,7 +29,28 @@ def get_dataset(data_dir, batch_size, img_height, img_width, validation_split=0.
         batch_size=batch_size
     )
     return train_ds, val_ds
+def save_sample_images(dataset, class_names, save_path):
+    """Creates a 3x3 grid of sample images and saves it to a file."""
+    import os
+    import matplotlib.pyplot as plt
 
+    # Create the directory if it doesn't exist
+    save_dir = os.path.dirname(save_path)
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
+    plt.figure(figsize=(10, 10))
+    for images, labels in dataset.take(1):
+        for i in range(9):
+            ax = plt.subplot(3, 3, i + 1)
+            plt.imshow(images[i].numpy().astype("uint8"))
+            plt.title(class_names[labels[i]])
+            plt.axis("off")
+    
+    # Save the figure
+    plt.savefig(save_path)
+    plt.close() # Close the plot to free up memory
+    print(f"Project banner saved to: {save_path}")
 def plot_history(history):
     """
     Visualizes the training and validation history and saves the plots to files.
