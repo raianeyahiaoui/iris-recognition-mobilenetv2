@@ -1,6 +1,6 @@
 # Iris Recognition using Transfer Learning with MobileNetV2
 
-![Project Banner](https://i.imgur.com/Q2hD12A.png)
+![Project Banner](docs/images/project_banner.png)
 
 [![Python Version](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/)
 [![TensorFlow Version](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
