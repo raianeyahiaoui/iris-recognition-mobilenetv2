@@ -49,12 +49,13 @@ IrisRecog-MobileNetV2/
     ├── main.py
     ├── model.py
     └── utils.py
+```
 
 ## 🗂️ Dataset Requirements
 
 This model requires a dataset of iris images organized into separate subdirectories for each class (i.e., each individual). The directory structure should be as follows:
 
-
+```
 data/
 ├── Train_Dataset/
 │   ├── class_001/
