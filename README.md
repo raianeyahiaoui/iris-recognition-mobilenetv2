@@ -123,13 +123,19 @@ The script will:
 5.  Display the performance plots.
 
 
+---
+
 ## 📊 Results
 
-After training, the script will output plots visualizing the model's accuracy and loss over each epoch. This helps in assessing overfitting and overall performance.
+The model was trained for 20 epochs, demonstrating strong learning capabilities. The training and validation metrics were tracked to monitor performance and prevent overfitting. Below are the plots for model accuracy and loss.
 
-*(Here you can add a sample image of your results plot after you run it)*
+The accuracy plot shows a consistent increase for both training and validation sets, indicating that the model is learning effectively. The loss plot shows a steady decrease, confirming the model's convergence.
 
-![Sample Results Plot](https-placeholder-for-your-results.png)
+| Model Accuracy | Model Loss |
+| :---: | :---: |
+| ![Accuracy Plot](docs/images/accuracy_plot.png) | ![Loss Plot](docs/images/loss_plot.png) |
+
+---
 
 
 
